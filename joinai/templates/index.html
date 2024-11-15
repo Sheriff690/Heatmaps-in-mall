@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/assets/favicon/favicon.ico" type="image/x-icon">
+
+    <!-- Map CSS -->
+    <link rel="stylesheet" href="../api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css">
+
+    <!-- Libs CSS -->
+    <link rel="stylesheet" href="static/assets/css/libs.bundle.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="static/assets/css/theme.bundle.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>body { display: none; }</style>
+
+    <!-- Title -->
+    <title>joinai.africa</title>
+
+    <script src="{{ url_for('static', filename='js/html2canvas.min.js') }}"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156446909-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "UA-156446909-1");</script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+
+  </head>
+<body>
+
+    <!-- NAVIGATION -->
+    <div data-bs-theme="">
+        <nav class="navbar navbar-vertical fixed-start navbar-expand-md" id="sidebar">
+            <div class="container-fluid">
+                <!-- Toggler -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Brand -->
+                <a class="navbar-brand" href="/">
+                    <img src="static/assets/img/joinai.jpeg" class="navbar-brand-img mx-auto" alt="...">
+                </a>
+                <!-- User (xs) -->
+                <div class="navbar-user d-md-none">
+                    <!-- Dropdown -->
+                    <div class="dropdown">
+                        <!-- Toggle -->
+                        <a href="#" id="sidebarIcon" class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar avatar-sm avatar-online">
+                                <img src="assets/img/avatars/profiles/avatar-1.jpg" class="avatar-img rounded-circle" alt="...">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Collapse -->
+                <div class="collapse navbar-collapse" id="sidebarCollapse">
+                    <!-- Navigation -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="sidebarDashboards">
+                                <i class="fe fe-home"></i> Dashboards
+                            </a>
+                            <!-- Dropdown content -->
+                            <div class="collapse show" id="sidebarDashboards">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="/heatmaps" class="nav-link">  <!--/heatmaps-->
+                                            <i class="fe fe-map"></i> Heatmaps
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/reports" class="nav-link">
+                                            <i class="fe fe-file-text"></i> Reports
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/recordings" class="nav-link">   <!--/recordings-->
+                                            <i class="fe fe-video"></i> Recordings
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">     <!--/settings-->
+                                            <i class="fe fe-settings"></i> Settings
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Divider -->
+                    <hr class="navbar-divider my-3">
+                    <!-- Push content down -->
+                    <div class="mt-auto"></div>
+                    <!-- User (md) -->
+                    <div class="navbar-user d-none d-md-flex" id="sidebarUser">
+                        <!-- Icon -->
+                        <a class="navbar-user-link" data-bs-toggle="offcanvas" href="#sidebarOffcanvasActivity" aria-controls="sidebarOffcanvasActivity">
+                            <span class="icon">
+                                <i class="fe fe-bell"></i>
+                            </span>
+                        </a>
+                        <!-- Dropup -->
+                        <div class="dropup">
+                            <!-- Toggle -->
+                            <a href="#" id="sidebarIconCopy" class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="avatar avatar-sm avatar-online">
+                                    <img src="https://joinacity.co.zw/wp-content/uploads/2024/05/joina-1000.png" class="avatar-img rounded-circle" alt="...">
+                                </div>
+                            </a>
+                        </div>
+                        <!-- Icon -->
+                        <a class="navbar-user-link" data-bs-toggle="offcanvas" href="#sidebarOffcanvasSearch" aria-controls="sidebarOffcanvasSearch">
+                            <span class="icon">
+                                <i class="fe fe-search"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div> <!-- / .navbar-collapse -->
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="container-fluid">
+                <!-- Body -->
+                <div class="header-body">
+                    <div class="row align-items-end">
+                        <div class="col">
+                            <!-- Pretitle -->
+                            <h6 class="header-pretitle">
+                                Overview
+                            </h6>
+                            <!-- Title -->
+                            <h1 class="header-title">
+                                Dashboard
+                            </h1>
+                        </div>
+                        <div class="col-auto">
+                            <p><a class="btn btn-primary lift" href="/people_count_graph">Graphs</a></p>
+                        </div>
+                    </div> <!-- / .row -->
+                </div> <!-- / .header-body -->
+            </div>
+        </div> <!-- / .header -->
+
+        <!-- Nav Pills for toggling Live Feed and Heatmaps -->
+        <ul class="nav nav-pills mb-3 justify-content-start" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-live-feed-tab" data-bs-toggle="pill" data-bs-target="#pills-live-feed" type="button" role="tab" aria-controls="pills-live-feed" aria-selected="true">Live Feed</button>
+            </li>
+            <li class="nav-item align-self-center">
+                <span class="separator">|</span>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-heatmaps-tab" data-bs-toggle="pill" data-bs-target="#pills-heatmaps" type="button" role="tab" aria-controls="pills-heatmaps" aria-selected="false">Heatmaps</button>
+            </li>
+        </ul>
+
+<!-- Content to be toggled between Live Feed and Heatmaps -->
+<div class="tab-content" id="pills-tabContent">
+    <!-- Live Feed Section -->
+    <div class="tab-pane fade show active" id="pills-live-feed" role="tabpanel" aria-labelledby="pills-live-feed-tab">
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Live Feed</h2>
+                            <img src="{{ url_for('video_feed') }}" alt="Live Video Feed" class="img-fluid" style="width: 100%; height: auto;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Heatmaps Section -->
+    <div class="tab-pane fade" id="pills-heatmaps" role="tabpanel" aria-labelledby="pills-heatmaps-tab">
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Heatmaps</h2>
+                            <div class="row">
+                                <div class="col-6">
+                                    <img src="{{ url_for('heatmap_feed', feed_index=0) }}" alt="Heatmap 1" class="img-fluid" style="width: 100%; height: 250px;">
+                                </div>
+                                <div class="col-6">
+                                    <img src="{{ url_for('heatmap_feed', feed_index=1) }}" alt="Heatmap 2" class="img-fluid" style="width: 100%; height: 250px;">
+                                </div>
+                                <div class="col-12">
+                                    <hr style="border-top: 1px solid #ddd;">
+                                </div>
+                                <div class="col-6">
+                                    <img src="{{ url_for('heatmap_feed', feed_index=2) }}" alt="Heatmap 3" class="img-fluid" style="width: 100%; height: 250px;">
+                                </div>
+                                <div class="col-6">
+                                    <img src="{{ url_for('heatmap_feed', feed_index=3) }}" alt="Heatmap 4" class="img-fluid" style="width: 100%; height: 250px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    .nav-pills .nav-link {
+        color: #A9A9A9; /* Bootstrap primary color */
+        border: none; /* Remove border */
+        transition: color 0.3s ease;
+    }
+    .nav-pills  .nav-link:hover {
+        color: #FF69B4;
+    }
+
+    .nav-pills .nav-link.active {
+        color: #32CD32; /* Keep text color for active state */
+        background-color: transparent; /* Remove background */
+        border-bottom: 2px solid #90EE90; /* Add underline for active tab */
+    }
+
+    .separator {
+        font-size: 1.5rem;
+        color: #808080; /* Change this to your desired separator color */
+        padding: 0 6px; /* Space around the pipe */
+    }
+</style>
+
+
+
+        <!-- CARDS -->
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <!-- Total Visitors -->
+                <div class="col-12 col-lg-6 col-xl">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center gx-0">
+                                <div class="col">
+                                    <h6 class="text-uppercase text-body-secondary mb-2">
+                                        Total Visitors
+                                    </h6>
+                                    <span class="h2 mb-0" id="visitor-count">
+                                        0
+                                    </span>
+                                    <span class="badge text-bg-success-subtle mt-n1">
+                                        +5.0%
+                                    </span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="h2 fe fe-users text-body-secondary mb-0"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Average Dwell Time -->
+                <div class="col-12 col-lg-6 col-xl">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center gx-0">
+                                <div class="col">
+                                    <h6 class="text-uppercase text-body-secondary mb-2">
+                                        Avg. Dwell Time
+                                    </h6>
+                                    <span class="h5 mb-0" id="average-dwell-times">
+                                        Loading...
+                                    </span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="h2 fe fe-clock text-body-secondary mb-0"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Exit Rate -->
+                <div class="col-12 col-lg-6 col-xl">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center gx-0">
+                                <div class="col">
+                                    <h6 class="text-uppercase text-body-secondary mb-2">
+                                        Exit Rate
+                                    </h6>
+                                    <span class="h5 mb-0">
+                                        40.0%
+                                    </span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="chart chart-sparkline">
+                                        <canvas class="chart-canvas" id="exitRateChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Peak Traffic Time -->
+                <div class="col-12 col-lg-6 col-xl">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center gx-0">
+                                <div class="col">
+                                    <h6 class="text-uppercase text-body-secondary mb-2">
+                                        Peak Traffic Time
+                                    </h6>
+                                    <span class="h5 mb-0">
+                                        5:00 PM - 6:00 PM
+                                    </span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="h2 fe fe-calendar text-body-secondary mb-0"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="card-header-title">
+                                        Business Insights
+                                    </h4>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="/export_report" class="btn btn-sm btn-white">
+                                        Export Report
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive mb-0">
+                            <table class="table table-sm table-nowrap card-table">
+                                <thead>
+                                    <tr>
+                                        <th>Goal</th>
+                                        <th>Status</th>
+                                        <th>Progress</th>
+                                        <th>Due Date</th>
+                                        <th class="text-end">Team</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Optimize Store Layout</td>
+                                        <td><span class="text-warning">●</span> In Progress</td>
+                                        <td>40%</td>
+                                        <td>12/15/24</td>
+                                        <td class="text-end">
+                                            <div class="avatar-group">
+                                                <!-- Team Avatars -->
+                                                <a href="#" class="avatar avatar-xs" data-bs-toggle="tooltip" title="Alex Smith">
+                                                    <img src="/assets/img/avatars/john.jpg" class="avatar-img rounded-circle" alt="...">
+                                                </a>
+                                                <a href="#" class="avatar avatar-xs" data-bs-toggle="tooltip" title="Maria Garcia">
+                                                    <img src="/assets/img/avatars/suzie.jpg" class="avatar-img rounded-circle" alt="...">
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="dropdown">
+                                                <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fe fe-more-vertical"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="#" class="dropdown-item">View</a>
+                                                    <a href="#" class="dropdown-item">Edit</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Increase Food Court Sales</td>
+                                        <td><span class="text-success">●</span> Completed</td>
+                                        <td>100%</td>
+                                        <td>11/30/24</td>
+                                        <td class="text-end">
+                                            <div class="avatar-group">
+                                                <a href="#" class="avatar avatar-xs" data-bs-toggle="tooltip" title="James Wong">
+                                                    <img src="/assets/img/avatars/alex.jpg" class="avatar-img rounded-circle" alt="...">
+                                                </a>
+                                                <a href="#" class="avatar avatar-xs" data-bs-toggle="tooltip" title="Sara Lee">
+                                                    <img src="/assets/img/avatars/suzie.jpg" class="avatar-img rounded-circle" alt="...">
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="dropdown">
+                                                <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fe fe-more-vertical"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="#" class="dropdown-item">View</a>
+                                                    <a href="#" class="dropdown-item">Edit</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Add more goals here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Connect to the SocketIO server
+        var socket = io();
+
+        // Listen for updates on the visitor count
+        socket.on('update_visitor_count', function(data) {
+            // Update the visitor count on the page
+            document.getElementById('visitor-count').innerText = data.total_visitors;
+        });
+
+        socket.on('update_average_dwell_time', function (data){
+            //Update the Average dwell time on the page
+            document.getElementById('average-dwell-times').innerText = data.average_dwell_time + " seconds"
+        });
+
+    </script>
+
+
+
+
+
+    <!-- MAP SCRIPT -->
+    <script src="../api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
+
+    <!-- Vendor Scripts -->
+    <script src="static/assets/js/vendor.bundle.js"></script>
+
+    <!-- Theme Scripts -->
+    <script src="static/assets/js/theme.bundle.js"></script>
+
+</body>
+</html>

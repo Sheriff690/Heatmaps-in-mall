@@ -1,0 +1,13 @@
+.venv
+.idea/
+__pycache__/
+../.idea/
+*.mp4
+*.pt
+*/static/assets/
+joinai/vidp1.mp4
+joinai/vidp2.mp4
+joinai/vidp3.mp4
+joinai/vidp4.mp4
+joinai/vidp5.mp4
+*/static/heatmaps/daily/*.png

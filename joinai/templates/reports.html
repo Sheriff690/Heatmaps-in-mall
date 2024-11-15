@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+</head>
+<body>
+    <h1>Generated Reports</h1>
+    <ul>
+        {% for report in report_files %}
+            <li>
+                <a href="{{ url_for('static', filename='reports/' + report) }}" target="_blank">{{ report }}</a>
+            </li>
+            {% else %}
+            <li>No Reports available</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

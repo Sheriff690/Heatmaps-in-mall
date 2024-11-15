@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recordings</title>
+    <link rel="stylesheet" href="static/css/styles.css">  <!-- Link to your styles -->
+</head>
+<body>
+    <h1>Recorded Videos</h1>
+    <ul>
+        {% for recording in recording_files %}
+            <li>
+                <a href="{{ url_for('static', filename='recordings/' + recording) }}">
+                    {{ recording }}
+                </a>
+            </li>
+        {% else %}
+        <li>No Live Recordings available</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
